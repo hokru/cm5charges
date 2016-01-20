@@ -1,0 +1,2 @@
+gfortran -static -o cm5 cm5.f90 
+
