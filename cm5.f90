@@ -140,7 +140,7 @@ dy= sqrt(dipole(2)**2)
 dz= sqrt(dipole(3)**2)
 s=sqrt(dipole(1)**2+dipole(2)**2+dipole(3)**2)
 
-write(*,'(a,F10.6)'     ) '  Total CM5 charge    : ',sum(qh)
+write(*,'(a,F10.6)'     ) '  Total CM5 charge       : ',sum(qcm5)
 write(*,*)                '                             X          Y          Z      TOTAL'
 write(*,'(a,4(F10.6,x))') '  CM5 dipole [Debye]  : ', dx,dy,dz,s
 
@@ -187,6 +187,7 @@ write(*,'(2x,3(a,F12.6,x))') 'XY= ',quad(1,2),'XZ= ',quad(1,3),'YZ= ',quad(2,3)
 write(*,'(2x,a,F12.6)') '  1/3 trace= ',(quad(1,1)+quad(2,2)+quad(3,3)/3d0)
 
 ! write data
+print*,'writing: cm5.dat with normal and  scaled CM5 charges'
 open(99,file='cm5.dat')
 do i=1,nat
 write(99,'(2(F10.6,x))') qcm5(i),qcm5(i)*fscale
@@ -196,8 +197,7 @@ close(99)
 
 ! write topology file section
 qcm5=qcm5*fscale/INV_AMBER_ELECTROSTATIC
-print*,'writing: cm5.top'
-print*,' with scaled CM5 charges'
+print*,'writing: cm5.top (amber topology) with scaled CM5 charges'
 open(111,file='cm5.top')
   write(111,'(a)')'%FLAG CHARGE'
   write(111,'(a)')'%FORMAT(5E16.8)'
