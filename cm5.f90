@@ -1,3 +1,25 @@
+!   The MIT License (MIT)
+!  
+!   Copyright (c) 2016 Holger Kruse
+!  
+!   Permission is hereby granted, free of charge, to any person obtaining a copy
+!   of this software and associated documentation files (the "Software"), to deal
+!   in the Software without restriction, including without limitation the rights
+!   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+!   copies of the Software, and to permit persons to whom the Software is
+!   furnished to do so, subject to the following conditions:
+!  
+!   The above copyright notice and this permission notice shall be included in all
+!   copies or substantial portions of the Software.
+!  
+!   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+!   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+!   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+!   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+!   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+!   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+!   SOFTWARE.
+!  
 program cm5charge
 implicit none
 integer nat,i,j,k,l,ii,jj,kdelta
@@ -11,7 +33,8 @@ real(8), parameter :: AMBER_ELECTROSTATIC = 18.2223d0
 real(8), parameter :: INV_AMBER_ELECTROSTATIC = 1.0d0/AMBER_ELECTROSTATIC
 
 
-! atomic radii from Mantina, Valero, Cramer, Truhlar
+! atomic radii from Mantina, Valero, Cramer, Truhlar "Atomic radii of elements"
+! Copyed by hand,  maybe contain typos...
 !            H       He
 data rvdw /1.10d0,1.40d0, &
     ! Li     Be     B     C       N      O     F      Ne
@@ -187,8 +210,8 @@ write(*,'(2x,3(a,F12.6,x))') 'XY= ',quad(1,2),'XZ= ',quad(1,3),'YZ= ',quad(2,3)
 write(*,'(2x,a,F12.6)') '  1/3 trace= ',(quad(1,1)+quad(2,2)+quad(3,3)/3d0)
 
 ! write data
-print*,'writing: cm5.dat with normal and  scaled CM5 charges'
-open(99,file='cm5.dat')
+print*,'writing: '//trim(infile)//'_cm5.dat with normal and  scaled CM5 charges'
+open(99,file=trim(infile)//'_cm5.dat')
 do i=1,nat
 write(99,'(2(F10.6,x))') qcm5(i),qcm5(i)*fscale
 enddo
@@ -197,8 +220,8 @@ close(99)
 
 ! write topology file section
 qcm5=qcm5*fscale/INV_AMBER_ELECTROSTATIC
-print*,'writing: cm5.top (amber topology) with scaled CM5 charges'
-open(111,file='cm5.top')
+print*,'writing: '//trim(infile)//'_cm5.top (amber topology) with scaled CM5 charges'
+open(111,file=trim(infile)//'_cm5.top')
   write(111,'(a)')'%FLAG CHARGE'
   write(111,'(a)')'%FORMAT(5E16.8)'
   write(111,'(5E16.8)') (qcm5(i),i = 1,nat)
