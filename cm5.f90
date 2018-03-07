@@ -158,9 +158,9 @@ enddo
 enddo
 
 dipole=dipole*4.802889778d0
-dx= sqrt(dipole(1)**2)
-dy= sqrt(dipole(2)**2)
-dz= sqrt(dipole(3)**2)
+dx= dipole(1)
+dy= dipole(2)
+dz= dipole(3)
 s=sqrt(dipole(1)**2+dipole(2)**2+dipole(3)**2)
 
 write(*,'(a,F10.6)'     ) '  Total CM5 charge       : ',sum(qcm5)
@@ -180,9 +180,9 @@ enddo
 
 
 dipole=dipole*4.802889778d0
-dx= sqrt(dipole(1)**2)
-dy= sqrt(dipole(2)**2)
-dz= sqrt(dipole(3)**2)
+dx= dipole(1)
+dy= dipole(2)
+dz= dipole(3)
 s=sqrt(dipole(1)**2+dipole(2)**2+dipole(3)**2)
 
 write(*,'(a,4(F10.6,x))') '  CM5 scaled [Debye]  : ', dx,dy,dz,s
